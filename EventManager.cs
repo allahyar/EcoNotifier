@@ -76,16 +76,16 @@ namespace Tasks
                     { "holiday", "تعطیلات" }
                 };
 
-                foreach (var newsItem in eventsArray)
+                foreach (var eventItem in eventsArray)
                 {
-                    DateTime newsTime = DateTime.Parse(newsItem["timestamp_raw"]?.ToString() ?? string.Empty);
-                    string currency = newsItem["currency"]?.ToString();
-                    string title = newsItem["title"]["fa"]?.ToString();
-                    string impact = newsItem["impact"]?.ToString();
+                    DateTime time = DateTime.Parse(eventItem["timestamp_raw"]?.ToString() ?? string.Empty);
+                    string currency = eventItem["currency"]?.ToString();
+                    string title = eventItem["title"]["fa"]?.ToString();
+                    string impact = eventItem["impact"]?.ToString();
                     impact = impactTranslations.GetValueOrDefault(impact, "");
-                    string id = newsItem["eventId"]?.ToString();
+                    string id = eventItem["eventId"]?.ToString();
 
-                    TimeSpan timeUntilEvent = newsTime - DateTime.Now;
+                    TimeSpan timeUntilEvent = time - DateTime.Now;
 
                     bool isEventUpcoming = timeUntilEvent.TotalSeconds > 0 && timeUntilEvent.TotalSeconds <= 300;
 

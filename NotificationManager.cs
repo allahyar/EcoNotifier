@@ -6,11 +6,7 @@
 
         public static void ShowNotification(int id, string title, string message)
         {
-            if (notifications.ContainsKey(id))
-            {
-                notifications[id].Dispose();
-                notifications.Remove(id);
-            }
+            if (notifications.ContainsKey(id)) return;
 
             NotifyIcon notifyIcon = new NotifyIcon
             {
