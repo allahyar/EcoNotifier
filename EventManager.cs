@@ -80,14 +80,19 @@ namespace Tasks
                 {
                     DateTime newsTime = DateTime.Parse(newsItem["timestamp_raw"]?.ToString() ?? string.Empty);
                     string currency = newsItem["currency"]?.ToString();
-                    string title = newsItem["title"]?["fa"]?.ToString();
+                    string title = newsItem["title"]["fa"]?.ToString();
                     string impact = newsItem["impact"]?.ToString();
-                    string impactTranslated = impactTranslations.GetValueOrDefault(impact, "نامشخص");
+                    impact = impactTranslations.GetValueOrDefault(impact, "");
                     string id = newsItem["eventId"]?.ToString();
 
-                    if ((newsTime - DateTime.Now).TotalSeconds <= 300 && (newsTime - DateTime.Now).TotalSeconds > 0)
+                    TimeSpan timeUntilEvent = newsTime - DateTime.Now;
+
+                    bool isEventUpcoming = timeUntilEvent.TotalSeconds > 0 && timeUntilEvent.TotalSeconds <= 300;
+
+                    if (isEventUpcoming)
                     {
-                        NotificationManager.ShowNotification(int.Parse(id), $"{currency} [{impactTranslated}]", title);
+                        string notificationTitle = $"{currency} [{impact}]";
+                        NotificationManager.ShowNotification(int.Parse(id), notificationTitle, title);
                     }
                 }
             }

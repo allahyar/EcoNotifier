@@ -16,7 +16,7 @@ namespace Services
                         Console.WriteLine("Registry key not found.");
                         return;
                     }
-                    key.SetValue("EconomicCalendar", exePath);
+                    key.SetValue("EcoNotifier", exePath);
                     Console.WriteLine("Application added to startup.");
                 }
             }
